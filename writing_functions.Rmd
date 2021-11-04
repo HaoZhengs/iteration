@@ -1,0 +1,89 @@
+---
+title: "writing_functions"
+author: "Hao Zheng"
+date: "11/4/2021"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+```
+
+```{r}
+set.seed(1)
+```
+
+```{r}
+x_vec = rnorm(25, mean = 5, sd = 3)
+
+(x_vec - mean(x_vec)) / sd(x_vec)
+
+z_scores = function(x){
+  
+  z = (x - mean(x)) / sd(x)
+  
+  return(z)
+  
+}
+
+z_scores(x = x_vec)
+
+y_vec = rnorm(40, mean = 12, sd = .3)
+
+z_scores(x = y_vec)
+```
+
+How great is this?
+
+Only kinda great.
+
+Lets try again to update it.
+
+```{r}
+z_scores = function(x){
+  
+  if(!is.numeric(x)){
+    stop("x need to be numeric")
+  }
+  
+  if(length(x) < 3){
+    stop("x should contains at least three numbers")
+  }
+  
+  z = (x - mean(x)) / sd(x)
+  
+  return(z)
+  
+}
+```
+
+
+```{r}
+mean_and_sd = function(x){
+  
+  if(!is.numeric(x)){
+    stop("x need to be numeric")
+  }
+  
+  if(length(x) < 3){
+    stop("x should contains at least three numbers")
+  }
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  output_df = 
+    tibble(
+      mean = mean_x,
+      sd = sd_x
+    )
+  
+  return(output_df)
+  
+}
+
+mean_and_sd(x_vec)
+mean_and_sd(y_vec)
+```
+
